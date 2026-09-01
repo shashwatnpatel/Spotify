@@ -315,3 +315,25 @@ function saveToServer(id, tier, listsArray) {
     })
     .catch(err => console.error("Save error:", err));
 }
+
+
+// --- MOBILE MENU LOGIC --- //
+
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (menuBtn && sidebar) {
+        // Toggle sidebar when clicking the hamburger menu
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar automatically when a list or tier is tapped
+        sidebar.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                sidebar.classList.remove('open');
+            }
+        });
+    }
+});
