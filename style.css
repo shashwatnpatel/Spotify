@@ -378,34 +378,60 @@ body {
 
 
 
-/* --- Mobile Responsiveness --- */
+/* --- Universal Sidebar Collapse & Responsiveness --- */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
 .menu-toggle {
-    display: none;
+    display: block; /* Now visible on desktop and mobile */
     background: none;
     border: none;
     color: var(--text-base);
     font-size: 24px;
     cursor: pointer;
-    margin-right: 12px;
+    margin-right: 16px;
+    transition: transform 0.2s ease;
 }
 
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* Show hamburger menu */
-    }
+.menu-toggle:hover {
+    transform: scale(1.1);
+}
 
+/* Desktop Sidebar Animations */
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    overflow-x: hidden;
+    white-space: nowrap; /* Prevents text wrapping when shrinking */
+}
+
+/* When collapsed on desktop */
+.sidebar.collapsed {
+    width: 0;
+    opacity: 0;
+}
+
+/* Mobile Overrides */
+@media (max-width: 768px) {
     .sidebar {
         position: fixed;
         top: 0;
-        left: -260px; /* Hide off-screen */
+        left: -260px; /* Hidden off-screen */
         height: 100vh;
         z-index: 1000;
-        transition: left 0.3s ease;
+        opacity: 1; 
         box-shadow: 4px 0 24px rgba(0,0,0,0.8);
     }
 
     .sidebar.open {
         left: 0; /* Slide in */
+    }
+
+    .sidebar.collapsed {
+        width: 240px; /* Prevent desktop shrink logic from breaking mobile */
     }
 
     .main-content {
@@ -421,8 +447,6 @@ body {
     }
 
     .header-left {
-        display: flex;
-        align-items: center;
         width: 100%;
     }
 
@@ -430,7 +454,6 @@ body {
         font-size: 24px;
     }
 
-    /* Shrink the grid for mobile */
     .album-grid {
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
         gap: 16px;
@@ -440,15 +463,6 @@ body {
         padding: 12px;
     }
 
-    .album-title {
-        font-size: 14px;
-    }
-
-    .album-artist {
-        font-size: 12px;
-    }
-
-    /* Make the modal fit the screen */
     .modal-content {
         width: 90%;
         max-width: 320px;

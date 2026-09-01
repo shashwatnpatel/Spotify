@@ -317,21 +317,26 @@ function saveToServer(id, tier, listsArray) {
 }
 
 
-// --- MOBILE MENU LOGIC --- //
+// --- SIDEBAR COLLAPSE LOGIC --- //
 
 document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById('mobile-menu-btn');
     const sidebar = document.querySelector('.sidebar');
 
     if (menuBtn && sidebar) {
-        // Toggle sidebar when clicking the hamburger menu
         menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
+            if (window.innerWidth <= 768) {
+                // On mobile, slide the menu in/out
+                sidebar.classList.toggle('open');
+            } else {
+                // On desktop, smoothly shrink/expand it to 0 width
+                sidebar.classList.toggle('collapsed');
+            }
         });
 
-        // Close sidebar automatically when a list or tier is tapped
+        // Close sidebar automatically on mobile when a list or tier is tapped
         sidebar.addEventListener('click', (e) => {
-            if (e.target.tagName === 'LI') {
+            if (window.innerWidth <= 768 && e.target.tagName === 'LI') {
                 sidebar.classList.remove('open');
             }
         });
