@@ -1,0 +1,377 @@
+:root {
+    --bg-base: #000000;
+    --bg-highlight: #121212;
+    --bg-card: #181818;
+    --bg-card-hover: #282828;
+    --text-base: #FFFFFF;
+    --text-subdued: #A7A7A7;
+    --accent: #1DB954;
+    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-base);
+    font-family: var(--font-family);
+    overflow: hidden; /* Prevent body scroll, handle in containers */
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 240px;
+    background-color: var(--bg-base);
+    display: flex;
+    flex-direction: column;
+    padding-top: 24px;
+}
+
+.sidebar-header h2 {
+    padding: 0 24px 16px;
+    font-size: 16px;
+    color: var(--text-subdued);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+#category-list {
+    list-style: none;
+    overflow-y: auto;
+}
+
+#category-list li {
+    padding: 10px 24px;
+    color: var(--text-subdued);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+#category-list li:hover, #category-list li.active {
+    color: var(--text-base);
+}
+
+/* --- Main Content --- */
+.main-content {
+    flex: 1;
+    background-color: var(--bg-highlight);
+    border-radius: 8px;
+    margin: 8px 8px 8px 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.topbar {
+    padding: 24px 24px 0;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-highlight);
+    z-index: 10;
+}
+
+.topbar h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.content-spacing {
+    padding: 24px;
+}
+
+/* --- Tiers & Grids --- */
+.tier-section {
+    margin-bottom: 40px;
+}
+
+.tier-header {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #333;
+}
+
+/* Dynamic colors for tier rankings */
+.tier-header[data-tier="S"] { color: #FF7F7F; border-color: #FF7F7F; }
+.tier-header[data-tier="A"] { color: #FFBF7F; border-color: #FFBF7F; }
+.tier-header[data-tier="B"] { color: #FFFF7F; border-color: #FFFF7F; }
+.tier-header[data-tier="C"] { color: #7FFF7F; border-color: #7FFF7F; }
+.tier-header[data-tier="D"] { color: #7FBFFF; border-color: #7FBFFF; }
+
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+/* --- Album Cards --- */
+.album-card {
+    background-color: var(--bg-card);
+    padding: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+.album-card:hover {
+    background-color: var(--bg-card-hover);
+}
+
+.album-image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.album-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.album-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-base);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album-artist {
+    font-size: 14px;
+    color: var(--text-subdued);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- New Hover Edit Button --- */
+.album-image-container {
+    position: relative; /* Required for placing the edit button */
+}
+
+.edit-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.album-card:hover .edit-btn {
+    opacity: 1;
+}
+
+.edit-btn:hover {
+    background-color: var(--accent);
+    transform: scale(1.05);
+}
+
+/* --- Edit Modal UI --- */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #282828;
+    padding: 24px;
+    border-radius: 8px;
+    width: 320px;
+    box-shadow: 0 16px 24px rgba(0,0,0,0.5);
+}
+
+#modal-title {
+    font-size: 20px;
+    margin-bottom: 4px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modal-subtitle {
+    color: var(--text-subdued);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.modal-form-group {
+    margin-bottom: 16px;
+}
+
+.modal-form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-subdued);
+    text-transform: uppercase;
+}
+
+.modal-form-group input, .modal-form-group select {
+    width: 100%;
+    padding: 10px;
+    background-color: #3E3E3E;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.modal-form-group input:focus, .modal-form-group select:focus {
+    outline: none;
+    border-color: #727272;
+    background-color: #4A4A4A;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-actions button {
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-cancel {
+    background-color: transparent;
+    color: white;
+}
+
+.btn-cancel:hover {
+    transform: scale(1.05);
+}
+
+.btn-save {
+    background-color: var(--accent); /* Spotify Green */
+    color: black;
+}
+
+.btn-save:hover {
+    background-color: #1ed760; /* Lighter green on hover */
+    transform: scale(1.05);
+}
+
+
+/* --- View Toggle Switch --- */
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.view-toggle {
+    background-color: #333;
+    border-radius: 20px;
+    padding: 4px;
+    display: flex;
+    gap: 4px;
+}
+
+.view-toggle button {
+    background: none;
+    border: none;
+    color: var(--text-subdued);
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.view-toggle button.active {
+    background-color: #555;
+    color: white;
+}
+
+/* --- Drag and Drop Styles --- */
+.album-card.dragging {
+    opacity: 0.4;
+    transform: scale(0.95);
+    border: 2px dashed var(--text-subdued);
+}
+
+.tier-section {
+    padding: 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.tier-section.drag-over {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px dashed var(--accent);
+}
+
+/* --- Sidebar Tiers & Drag States --- */
+.sidebar-divider {
+    padding: 24px 24px 8px !important;
+    font-size: 12px !important;
+    font-weight: 700;
+    color: var(--text-subdued) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: default !important;
+    pointer-events: none;
+}
+
+#category-list li {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#category-list li.drag-over-sidebar {
+    background-color: var(--bg-card-hover);
+    color: var(--accent);
+    border-left: 4px solid var(--accent);
+    padding-left: 20px; /* Offset to keep text aligned with the new border */
+}

@@ -1,0 +1,6 @@
+.env
+YourLibrary.json
+server.py
+process_albums.py
+__pycache__/
+my_spotify_data/

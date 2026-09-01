@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Music Vault</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Your Library</h2>
+            </div>
+            <ul id="category-list"></ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-left">
+                    <h1 id="current-view-title">All Albums</h1>
+                </div>
+                <div class="header-right">
+                    <div class="view-toggle">
+                        <button id="btn-ranking-view" class="active" onclick="switchView('ranking')">Ranking View</button>
+                        <button id="btn-list-view" onclick="switchView('list')">List View</button>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-spacing">
+                <div id="main-container">
+                    <!-- Dynamic content injected here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title">Edit Album</h3>
+            <p id="modal-artist" class="modal-subtitle"></p>
+            
+            <div class="modal-form-group">
+                <label for="modal-tier">Tier</label>
+                <select id="modal-tier">
+                    <option value="S">S Tier</option>
+                    <option value="A">A Tier</option>
+                    <option value="B">B Tier</option>
+                    <option value="C">C Tier</option>
+                    <option value="D">D Tier</option>
+                    <option value="Unranked">Unranked</option>
+                </select>
+            </div>
+            
+            <div class="modal-form-group">
+                <label for="modal-lists">Lists (Comma separated)</label>
+                <input type="text" id="modal-lists" placeholder="e.g. Classics, Gym, Favorites">
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save" onclick="submitModal()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
