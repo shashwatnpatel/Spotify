@@ -44,8 +44,9 @@
     "artist": "Black Box Recorder",
     "album_name": "England Made Me",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27368e8d2ccea9adb0dcdc0e08e",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 9.0
   },
   {
     "id": "7",
@@ -69,7 +70,8 @@
     "album_name": "Stereotype A",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273dd95cdf7371a3eb8ccca3799",
     "tier": "A",
-    "lists": []
+    "lists": [],
+    "rating": 8.0
   },
   {
     "id": "10",
@@ -596,8 +598,9 @@
     "artist": "Kanye West",
     "album_name": "My Beautiful Dark Twisted Fantasy",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d9194aa18fa4c9362b47464f",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 9.0
   },
   {
     "id": "76",
@@ -980,8 +983,9 @@
     "artist": "Kim Jung Mi",
     "album_name": "Now",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273c4a28e04dffeb0a3a777ef63",
-    "category": "Uncategorized",
-    "tier": "A"
+    "tier": "A",
+    "lists": [],
+    "rating": 7.5
   },
   {
     "id": "124",
@@ -1068,8 +1072,9 @@
     "artist": "Air",
     "album_name": "Moon Safari",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273f175f7e9aa80290164db00a3",
-    "category": "Uncategorized",
-    "tier": "A"
+    "tier": "A",
+    "lists": [],
+    "rating": 9.0
   },
   {
     "id": "135",
@@ -1132,8 +1137,9 @@
     "artist": "Vashti Bunyan",
     "album_name": "Just Another Diamond Day",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273db24c9a2f4b32c0fdde0b708",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 9.0
   },
   {
     "id": "143",
@@ -1364,8 +1370,9 @@
     "artist": "Joni Mitchell",
     "album_name": "Blue",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273e79dc1438d650f426b5e99a7",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 8.5
   },
   {
     "id": "172",
@@ -1484,8 +1491,9 @@
     "artist": "Dog Faced Hermans",
     "album_name": "Hum Of Life",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273fc3c12c42d83e41d1559d4cf",
-    "category": "Uncategorized",
-    "tier": "A"
+    "tier": "A",
+    "lists": [],
+    "rating": 8.0
   },
   {
     "id": "187",
@@ -1780,8 +1788,9 @@
     "artist": "Sampha",
     "album_name": "Lahai",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27365fa072296480cea19a38cd0",
-    "category": "Uncategorized",
-    "tier": "A"
+    "tier": "A",
+    "lists": [],
+    "rating": 7.5
   },
   {
     "id": "224",
@@ -1988,8 +1997,9 @@
     "artist": "ROSAL\u00cdA",
     "album_name": "LUX",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27393ee2e2f2dfb7de9befcc164",
-    "category": "Uncategorized",
-    "tier": "A"
+    "tier": "A",
+    "lists": [],
+    "rating": 8.0
   },
   {
     "id": "250",
@@ -2180,8 +2190,9 @@
     "artist": "Nujabes",
     "album_name": "Modal Soul",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273421d647a4f604d79943f4dad",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 8.5
   },
   {
     "id": "274",
@@ -2308,8 +2319,9 @@
     "artist": "Ninajirachi",
     "album_name": "I Love My Computer",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2733b9b742c5c525af6e6767d87",
-    "category": "Uncategorized",
-    "tier": "Unranked"
+    "tier": "A",
+    "lists": [],
+    "rating": 0.0
   },
   {
     "id": "290",
@@ -2693,7 +2705,8 @@
     "album_name": "Hounds of Love",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273ad08f4b38efbff0c0da0f252",
     "tier": "A",
-    "lists": []
+    "lists": [],
+    "rating": 8.5
   },
   {
     "id": "338",
@@ -2708,8 +2721,9 @@
     "artist": "Satanicpornocultshop",
     "album_name": "Arkhaiomelisidonophunikheratos",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273a04ab67781fd7f5fcd9f243f",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 8.0
   },
   {
     "id": "340",
@@ -2844,8 +2858,9 @@
     "artist": "PinkPantheress",
     "album_name": "Fancy That",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2732a6a5bd7ec690d91a384245d",
-    "category": "Uncategorized",
-    "tier": "A"
+    "tier": "A",
+    "lists": [],
+    "rating": 7.5
   },
   {
     "id": "357",
@@ -2956,8 +2971,9 @@
     "artist": "Britney Spears",
     "album_name": "Blackout",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b273d0a8bfe18f25429d76886b1e",
-    "category": "Uncategorized",
-    "tier": "A"
+    "tier": "A",
+    "lists": [],
+    "rating": 7.5
   },
   {
     "id": "371",
@@ -3125,7 +3141,8 @@
     "album_name": "Fetch The Bolt Cutters",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27358e51e35730fcfd6e4aeef51",
     "tier": "A",
-    "lists": []
+    "lists": [],
+    "rating": 0.0
   },
   {
     "id": "392",
@@ -3324,8 +3341,9 @@
     "artist": "PJ Harvey",
     "album_name": "To Bring You My Love",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b2736ea4af8437d78b607f30c8f0",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 8.0
   },
   {
     "id": "417",
@@ -3444,8 +3462,9 @@
     "artist": "Nirvana",
     "album_name": "MTV Unplugged In New York",
     "thumbnail_url": "https://i.scdn.co/image/ab67616d0000b27336c5417732e53e23cb219246",
-    "category": "Uncategorized",
-    "tier": "S"
+    "tier": "S",
+    "lists": [],
+    "rating": 8.5
   },
   {
     "id": "432",

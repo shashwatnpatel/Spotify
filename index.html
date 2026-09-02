@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Music Vault</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
     <div class="app-container">
@@ -23,17 +23,43 @@
                     <button id="mobile-menu-btn" class="menu-toggle">☰</button>
                     <h1 id="current-view-title">All Albums</h1>
                 </div>
+                
+                <div class="header-center">
+                    <input type="text" id="search-input" placeholder="Search artists, albums..." onkeyup="handleSearch(event)">
+                </div>
+
                 <div class="header-right">
+                    <button id="btn-print" onclick="window.print()" title="Export Catalog as PDF">🖨️</button>
+                    
+                    <div class="sort-container">
+                        <select id="sort-select" onchange="handleSortChange(event)">
+                            <option value="default">Sort: Default</option>
+                            <option value="rating-desc">Rating: High to Low</option>
+                            <option value="rating-asc">Rating: Low to High</option>
+                            <option value="year-desc">Year: Newest</option>
+                            <option value="year-asc">Year: Oldest</option>
+                            <option value="duration-desc">Length: Longest</option>
+                            <option value="duration-asc">Length: Shortest</option>
+                        </select>
+                    </div>
+                    
                     <div class="view-toggle">
-                        <button id="btn-ranking-view" class="active" onclick="switchView('ranking')">Ranking View</button>
-                        <button id="btn-list-view" onclick="switchView('list')">List View</button>
+                        <button id="btn-ranking-view" class="active" onclick="switchView('ranking')">Ranking</button>
+                        <button id="btn-list-view" onclick="switchView('list')">List</button>
+                        <button id="btn-table-view" onclick="switchView('table')">Table</button>
                     </div>
                 </div>
             </header>
             
             <div class="content-spacing">
                 <div id="main-container">
-                    <!-- Dynamic content injected here -->
+                    <div class="skeleton-grid">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -58,6 +84,13 @@
             </div>
             
             <div class="modal-form-group">
+                <label>Rating: <span id="rating-display-value">0</span> / 10</label>
+                <div class="star-rating-container" id="modal-star-container">
+                    <!-- JS will inject the 10 interactive stars here -->
+                </div>
+            </div>
+            
+            <div class="modal-form-group">
                 <label for="modal-lists">Lists (Comma separated)</label>
                 <input type="text" id="modal-lists" placeholder="e.g. Classics, Gym, Favorites">
             </div>
@@ -69,6 +102,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=3"></script>
 </body>
 </html>
