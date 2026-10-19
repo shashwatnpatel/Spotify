@@ -4,3 +4,10 @@ server.py
 process_albums.py
 __pycache__/
 my_spotify_data/
+serviceAccountKey.json
+.cache
+.spotify_album_cache.json
+sync-retry.json
+*.pyc
+.venv/
+venv/

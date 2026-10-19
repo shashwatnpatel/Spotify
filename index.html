@@ -4,35 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Music Vault</title>
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=27">
 </head>
-<body>
+<body class="is-readonly">
     <div class="app-container">
-        <!-- Sidebar -->
-        <nav class="sidebar">
+        <nav class="sidebar" aria-label="Library navigation">
             <div class="sidebar-header">
                 <h2>Your Library</h2>
             </div>
             <ul id="category-list"></ul>
         </nav>
 
-        <!-- Main Content -->
         <main class="main-content">
             <header class="topbar">
                 <div class="header-left">
-                    <button id="mobile-menu-btn" class="menu-toggle">☰</button>
+                    <button id="mobile-menu-btn" class="menu-toggle" type="button" aria-label="Toggle library menu" aria-expanded="false" aria-controls="category-list">☰</button>
                     <h1 id="current-view-title">All Albums</h1>
                 </div>
-                
+
                 <div class="header-center">
-                    <input type="text" id="search-input" placeholder="Search artists, albums..." onkeyup="handleSearch(event)">
+                    <label class="sr-only" for="search-input">Search artists, albums, and tracks</label>
+                    <input type="search" id="search-input" placeholder="Search artists, albums, tracks...">
                 </div>
 
                 <div class="header-right">
-                    <button id="btn-print" onclick="window.print()" title="Export Catalog as PDF">🖨️</button>
-                    
+                    <span id="mode-label" class="mode-label">Read only</span>
+                    <div id="save-status-group" class="save-status-group" hidden>
+                        <span id="save-status" class="save-status" role="status" aria-live="polite"></span>
+                    </div>
+
                     <div class="sort-container">
-                        <select id="sort-select" onchange="handleSortChange(event)">
+                        <label class="sr-only" for="sort-select">Sort albums</label>
+                        <select id="sort-select">
                             <option value="default">Sort: Default</option>
                             <option value="rating-desc">Rating: High to Low</option>
                             <option value="rating-asc">Rating: Low to High</option>
@@ -42,18 +45,148 @@
                             <option value="duration-asc">Length: Shortest</option>
                         </select>
                     </div>
-                    
-                    <div class="view-toggle">
-                        <button id="btn-ranking-view" class="active" onclick="switchView('ranking')">Ranking</button>
-                        <button id="btn-list-view" onclick="switchView('list')">List</button>
-                        <button id="btn-table-view" onclick="switchView('table')">Table</button>
+                    <div class="filter-menu menu-anchor">
+                        <button type="button" id="btn-filters" class="toolbar-select" aria-expanded="false" aria-controls="filter-panel">
+                            Filter
+                        </button>
+                    </div>
+                    <div class="data-menu menu-anchor">
+                        <button type="button" id="btn-data-tools" class="toolbar-select" aria-expanded="false" aria-controls="data-tools-panel">
+                            More
+                        </button>
+                        <div id="data-tools-panel" class="data-tools" hidden>
+                            <button type="button" id="btn-print">Print / Save PDF</button>
+                            <button type="button" id="btn-export-json">Export backup</button>
+                            <button type="button" id="btn-export-csv">Export CSV</button>
+                            <button type="button" id="btn-import-backup" hidden>Load local backup</button>
+                            <button type="button" id="btn-clear-local-edits" hidden>Discard local changes</button>
+                            <input type="file" id="backup-file-input" accept=".json,application/json" hidden>
+                            <button type="button" id="btn-import-history">Import Spotify history</button>
+                            <input type="file" id="history-file-input" accept=".json,application/json" multiple hidden>
+                        </div>
+                    </div>
+
+                    <div class="view-toggle" role="group" aria-label="Album layout">
+                        <button type="button" id="btn-ranking-view" class="active" aria-pressed="true">Ranking</button>
+                        <button type="button" id="btn-list-view" aria-pressed="false">List</button>
+                        <button type="button" id="btn-table-view" aria-pressed="false">Table</button>
+                        <button type="button" id="btn-insights-view" aria-pressed="false">Insights</button>
+                    </div>
+                </div>
+                <div class="library-tools" aria-label="Library tools">
+                    <div id="filter-panel" class="filter-panel" aria-labelledby="filter-panel-title"
+                         aria-describedby="filter-help" hidden>
+                        <div class="filter-panel-header">
+                            <h2 id="filter-panel-title">Filter albums</h2>
+                            <button type="button" id="btn-clear-filters" class="filter-clear-btn">Clear all</button>
+                            <button type="button" id="btn-close-filters" class="filter-close-btn">Close</button>
+                        </div>
+                        <p id="filter-help" class="filter-help">Filters apply as you change them. Select Close, press Esc, or click outside to close.</p>
+                        <div class="filter-grid">
+                            <div class="filter-field">
+                                <label for="filter-tier">Tier</label>
+                                <select id="filter-tier">
+                                    <option value="">Any tier</option>
+                                    <option value="S">S Tier</option>
+                                    <option value="A">A Tier</option>
+                                    <option value="B">B Tier</option>
+                                    <option value="C">C Tier</option>
+                                    <option value="D">D Tier</option>
+                                    <option value="Unranked">Unranked</option>
+                                </select>
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-list">List</label>
+                                <select id="filter-list">
+                                    <option value="">Any list</option>
+                                </select>
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-duration-min">Minimum length (min)</label>
+                                <input id="filter-duration-min" type="number" min="0" step="1" inputmode="numeric">
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-duration-max">Maximum length (min)</label>
+                                <input id="filter-duration-max" type="number" min="0" step="1" inputmode="numeric">
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-rating-min">Minimum rating</label>
+                                <input id="filter-rating-min" type="number" min="0" max="10" step="0.5" inputmode="decimal">
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-rating-max">Maximum rating</label>
+                                <input id="filter-rating-max" type="number" min="0" max="10" step="0.5" inputmode="decimal">
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-year-min">Release year from</label>
+                                <input id="filter-year-min" type="number" min="0" max="9999" step="1" inputmode="numeric">
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-year-max">Release year to</label>
+                                <input id="filter-year-max" type="number" min="0" max="9999" step="1" inputmode="numeric">
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-listening">Listening history</label>
+                                <select id="filter-listening">
+                                    <option value="">Any listening status</option>
+                                    <option value="listened">Listened to</option>
+                                    <option value="unlistened">Not listened to</option>
+                                </select>
+                            </div>
+                            <div class="filter-field">
+                                <label for="filter-track-data">Track data</label>
+                                <select id="filter-track-data">
+                                    <option value="">Any track data</option>
+                                    <option value="missing">Missing track names</option>
+                                    <option value="duration">Missing album duration</option>
+                                    <option value="issues">Any data issue</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="saved-filter-views" aria-label="Saved filter views">
+                            <label for="saved-filter-view-select">Saved views</label>
+                            <div class="saved-filter-controls">
+                                <select id="saved-filter-view-select" aria-label="Choose a saved filter view">
+                                    <option value="">Choose a saved view</option>
+                                </select>
+                                <button type="button" id="btn-apply-filter-view">Apply</button>
+                                <button type="button" id="btn-delete-filter-view">Delete</button>
+                            </div>
+                            <div class="saved-filter-controls">
+                                <label class="sr-only" for="saved-filter-view-name">Name this filter view</label>
+                                <input id="saved-filter-view-name" type="text" maxlength="40" placeholder="Name this filter view">
+                                <button type="button" id="btn-save-filter-view">Save current filters</button>
+                            </div>
+                            <p id="saved-filter-view-status" role="status" aria-live="polite"></p>
+                        </div>
+                        <p id="filter-error" class="form-error" role="alert"></p>
+                    </div>
+                    <p id="data-tool-status" class="tool-status" role="status" aria-live="polite"></p>
+                    <div id="publish-command-wrap" class="publish-command-wrap" hidden>
+                        <code id="publish-command"></code>
+                        <button type="button" id="btn-copy-publish-command">Copy command</button>
                     </div>
                 </div>
             </header>
-            
+
             <div class="content-spacing">
+                <aside id="getting-started" class="getting-started" aria-labelledby="getting-started-title" hidden>
+                    <div>
+                        <h2 id="getting-started-title">Welcome to your music library</h2>
+                        <p id="getting-started-copy"></p>
+                    </div>
+                    <button type="button" id="btn-dismiss-getting-started" aria-label="Dismiss getting started guide">
+                        Got it
+                    </button>
+                </aside>
+                <p id="catalog-load-status" class="catalog-load-status" role="status" aria-live="polite" hidden>
+                    <span id="catalog-load-message"></span>
+                    <button type="button" id="btn-refresh-catalog">Refresh catalog</button>
+                </p>
+                <section id="catalog-health" class="catalog-health" aria-label="Known catalog data gaps" hidden></section>
+                <div id="results-summary" class="results-summary" aria-live="polite"></div>
                 <div id="main-container">
-                    <div class="skeleton-grid">
+                    <div class="skeleton-grid" aria-hidden="true">
                         <div class="skeleton-card"></div>
                         <div class="skeleton-card"></div>
                         <div class="skeleton-card"></div>
@@ -64,14 +197,19 @@
             </div>
         </main>
     </div>
+    <button id="sidebar-backdrop" class="sidebar-backdrop" type="button" aria-label="Close library menu" hidden></button>
 
-    <!-- Edit Modal -->
-    <div id="edit-modal" class="modal-overlay">
+    <div id="edit-modal" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
         <div class="modal-content">
-            <h3 id="modal-title">Edit Album</h3>
-            <p id="modal-artist" class="modal-subtitle"></p>
-            
-            <div class="modal-form-group">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-title">Album Title</h2>
+                    <div id="modal-artist">Artist Name</div>
+                </div>
+                <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close edit dialog">&times;</button>
+            </div>
+
+            <div class="modal-body">
                 <label for="modal-tier">Tier</label>
                 <select id="modal-tier">
                     <option value="S">S Tier</option>
@@ -81,27 +219,28 @@
                     <option value="D">D Tier</option>
                     <option value="Unranked">Unranked</option>
                 </select>
+
+                <label for="modal-lists">Lists / Tags (comma-separated)</label>
+                <input type="text" id="modal-lists" placeholder="e.g. Favorites, Synthpop, 80s">
+
+                <label for="modal-star-container">Rating: <span id="rating-display-value">0.0</span> / 10</label>
+                <div id="modal-star-container" class="modal-stars"></div>
             </div>
-            
-            <div class="modal-form-group">
-                <label>Rating: <span id="rating-display-value">0</span> / 10</label>
-                <div class="star-rating-container" id="modal-star-container">
-                    <!-- JS will inject the 10 interactive stars here -->
-                </div>
-            </div>
-            
-            <div class="modal-form-group">
-                <label for="modal-lists">Lists (Comma separated)</label>
-                <input type="text" id="modal-lists" placeholder="e.g. Classics, Gym, Favorites">
-            </div>
-            
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-                <button class="btn-save" onclick="submitModal()">Save</button>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" id="modal-cancel-btn">Cancel</button>
+                <button type="button" class="btn-save" id="modal-save-btn">Save</button>
             </div>
         </div>
     </div>
 
-    <script src="script.js?v=3"></script>
+    <div id="undo-toast" class="undo-toast" hidden>
+        <span id="undo-toast-message">Album moved.</span>
+        <button type="button" id="undo-btn">Undo</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script.js?v=35"></script>
 </body>
 </html>
